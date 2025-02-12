@@ -29,13 +29,13 @@ export const getPrice = (item: SeafoodItem, userIP: string, selectedStore: strin
 }
 
 const endpoints = {
-    online: 'api/seafood.json',
-    local: '../../../seafood-ff.json'
+    proxy: 'api/seafood.json',
+    online: 'https://mobile-api.junglejims.com/seafood.json',
 }
 
 export const fetchSeafoodData = async (): Promise<SeafoodItem[]> => {
     try {
-        const response = await fetch(endpoints.online);
+        const response = await fetch(import.meta.env.PROD ? endpoints.online : endpoints.proxy);
 
         if (!response.ok) {
             throw new Error('Network response was not ok');

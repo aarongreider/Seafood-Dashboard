@@ -33,7 +33,7 @@ function App() {
 
 
   useEffect(() => {  //execute the initial fetches
-    console.log("v .1");
+    console.log("v .2");
 
 
     import.meta.env.PROD ? undefined : setDevelopmentStyles()
