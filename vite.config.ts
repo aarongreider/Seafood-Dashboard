@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   return {
-    base: mode === 'production' ? 'https://aaron.greider.org/wine-cellar-dashboard/dist/' : '/',
+    base: mode === 'production' ? 'https://aaron.greider.org/Seafood-Dashboard/dist/' : '/',
     plugins: [react()],
     build: {
       rollupOptions: {
