@@ -48,7 +48,6 @@ export const fetchSeafoodData = async (): Promise<SeafoodItem[]> => {
         console.error('There was a problem with the fetch operation:', error);
         throw error; // Ensure the error is propagated if necessary
     }
-
 }
 
 export const searchItems = (seafoodItems: SeafoodItem[], searchQuery: string): SeafoodItem[] => {
@@ -66,6 +65,24 @@ export const searchItems = (seafoodItems: SeafoodItem[], searchQuery: string): S
     } else {
         return seafoodItems
     }
+}
+
+export const filterStore = (seafoodItems: SeafoodItem[], store: string): SeafoodItem[] => {
+    // filter bottle list based on query match, runs more frequently
+    if (store) {
+        if (store == 'fairfield') {
+            return seafoodItems.filter((item) => {
+                return (item.fairfieldStatus == "In Stock");
+            })
+        }
+        if (store == 'eastgate') {
+            return seafoodItems.filter((item) => {
+                return (item.eastgateStatus == "In Stock");
+            })
+        }
+    }
+
+    return seafoodItems
 }
 
 export const filterCategory = (seafoodItems: SeafoodItem[], selectedCategories: string[]): SeafoodItem[] => {
@@ -103,7 +120,7 @@ export const filterTypes = (seafoodItems: SeafoodItem[], selectedTypes: string[]
 }
 
 
-export const sortBottles = (filteredSeafoodItems: SeafoodItem[], sortQuery: string, store:string, IP: string): SeafoodItem[] => {
+export const sortBottles = (filteredSeafoodItems: SeafoodItem[], sortQuery: string, store: string, IP: string): SeafoodItem[] => {
     // Sort the filtered array by Vintage year, with undated bottles at the bottom
     const cleanPrice = (price: string): number => {
         // Remove non-numeric characters except periods (.) using a regex
@@ -175,8 +192,7 @@ export const assembleSeafoodTypes = (seafoodItems: SeafoodItem[], types: string[
     const sortedTypes = Array.from(matchingTypes).sort((a, b) => {
         return a.localeCompare(b);
     })
-    console.log(sortedTypes);
-    
+
     // Return only wine types that matched
     return sortedTypes;
 };
@@ -209,7 +225,7 @@ export const seafoodTypes = [
     "Bream",
     "Perch",
     "Pike",
-    
+
     // Shellfish
     "Shrimp",
     "Prawns",
@@ -223,32 +239,32 @@ export const seafoodTypes = [
     "Abalone",
     "Cockle",
     "Periwinkle",
-    
+
     // Cephalopods
     "Octopus",
     "Squid",
     "Cuttlefish",
-    
+
     // Roe
     "Caviar",
     "Salmon Roe (Ikura)",
     "Flying Fish Roe (Tobiko)",
     "Capelin Roe (Masago)",
     "Lumpfish Roe",
-    
+
     // Echinoderms and other invertebrates
     "Sea Urchin (Uni)",
     "Sea Cucumber",
-    
+
     // Additional types
     "Jellyfish"
-  ];
-  
+];
+
 
 import '../../Default CSS/907ce8a0_ai1ec_parsed_css.css'
 export const setDevelopmentStyles = () => {
     console.log('setting dev styles');
-    
+
     const DevelopmentStyles = [
         '<link rel="stylesheet" href="../../Default CSS/907ce8a0_ai1ec_parsed_css.css">',
         '<link rel="stylesheet" href="../../Default CSS/ajax-load-more.min.css">',

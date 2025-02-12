@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import './App.css'
-import { fetchSeafoodData, filterCategory, searchItems, sortBottles, SeafoodItem, setDevelopmentStyles, setWPStyles, assembleSeafoodTypes, seafoodTypes, filterTypes } from './utils'
+import { fetchSeafoodData, filterCategory, searchItems, sortBottles, SeafoodItem, setDevelopmentStyles, setWPStyles, assembleSeafoodTypes, seafoodTypes, filterTypes, filterStore } from './utils'
 import { SeafoodCard } from './components/SeafoodCard/SeafoodCard'
 import { FilterPanel, WithPopUp, WithSidePanel } from './components/FilterPanel/FilterPanel'
 import { LoadingWidget } from './components/LoadingWidget'
@@ -130,7 +130,7 @@ function App() {
   useEffect(() => {  // when the user searches for a keyword, filter it here
     const filteredList = orderedBottles()
     setFilteredSeafoodItems(filteredList)
-  }, [searchQuery])
+  }, [searchQuery, store])
 
 
    useEffect(() => { // window size listener
@@ -150,8 +150,8 @@ function App() {
 
 
   const orderedBottles = (): SeafoodItem[] => {
-    // wine type > country > search query > sort
-    return sortBottles(searchItems(filterCategory(filterTypes(seafoodItems, selectedTypes), selectedCategories), searchQuery), sortQuery, store, userIP)
+    // wine type > country > search query > sort    
+    return sortBottles(searchItems(filterCategory(filterTypes(filterStore(seafoodItems, store), selectedTypes), selectedCategories), searchQuery), sortQuery, store, userIP)
   }
 
   const onSort = () => {
@@ -169,7 +169,6 @@ function App() {
     } else {
       newArray.push(query)
     }
-    console.log(newArray);
 
     setSelectedCategories(newArray)
     const filteredList = orderedBottles()
@@ -183,7 +182,6 @@ function App() {
     } else {
       newArray.push(query)
     }
-    console.log(newArray);
 
     setSelectedTypes(newArray)
     const filteredList = orderedBottles()
@@ -259,7 +257,7 @@ function App() {
           {
             isMobile ?
               <div className='filterToolbar'>
-                <WithPopUp viewportRes={viewportRes} title='Ad Categories' scrollable={true}>
+                <WithPopUp viewportRes={viewportRes} title='Categories' scrollable={true}>
                   <FilterPanel filters={categories} activeFilters={selectedCategories} handleFilter={handleFilterCategory} />
                 </WithPopUp>
                 <WithPopUp viewportRes={viewportRes} title='Fish Types' scrollable={true}>
@@ -298,7 +296,7 @@ function App() {
               <div id="seafoodList">
                 {filteredSeafoodItems.length > 0 ? filteredSeafoodItems.map((item, index) => {
                   return <SeafoodCard key={index} item={item} store={store} IP={userIP}></SeafoodCard>
-                }) : <div style={{ flexDirection: 'column' }} className='wineBottle'><p>No Wine Bottles Found</p><p>{notFoundIcons[Math.floor(Math.random() * 4)]}</p></div>}
+                }) : <div style={{ flexDirection: 'column' }} className='wineBottle'><p>None of our seafood matches your search!</p><p>{notFoundIcons[Math.floor(Math.random() * 4)]}</p></div>}
               </div>
             </div>
         }
