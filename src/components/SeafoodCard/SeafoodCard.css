@@ -1,0 +1,39 @@
+#seafoodList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+#seafoodList .seafoodItem {
+  padding: 10px 20px;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  background: #e9e5d4;
+  border-radius: 16px;
+  font-size: 22px;
+  font-family: "Alegreya Sans", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  color: rgb(48, 85, 58);
+}
+#seafoodList .seafoodItem * {
+  margin: 0;
+}
+#seafoodList .seafoodItem div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  text-align: left;
+}
+#seafoodList .seafoodItem div:last-child {
+  align-items: flex-end;
+  text-align: right;
+}
+#seafoodList .seafoodItem p {
+  font-size: 18px;
+  font-weight: light;
+}/*# sourceMappingURL=SeafoodCard.css.map */

@@ -1,0 +1,90 @@
+body {
+  overflow-x: hidden;
+}
+
+#rootAnchor {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: visible;
+  z-index: 100;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100svw;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #2a4731;
+  text-align: center;
+}
+
+#appContainer {
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* body {
+    height: auto !important;
+} */
+p {
+  margin: 0;
+}
+
+input,
+select {
+  background: none;
+  border: none !important;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0;
+}
+
+#listWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  width: 100%;
+}
+
+.toolbarWrapper,
+#toolbarWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+  width: 100%;
+  position: sticky;
+  top: 60px;
+  pointer-events: none;
+  filter: drop-shadow(rgba(0, 0, 0, 0.25) 0px 2px 4px);
+}
+
+.inputWrapper {
+  padding: 5px 10px 5px 5px;
+}
+
+select.noAppearance {
+  -o-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.selectChevron {
+  font-weight: 600;
+  font-size: 20px;
+  transform: translateY(1px);
+}/*# sourceMappingURL=App.css.map */
