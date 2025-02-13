@@ -33,7 +33,7 @@ function App() {
 
 
   useEffect(() => {  //execute the initial fetches
-    console.log("v .4");
+    console.log("v .5");
 
 
     import.meta.env.PROD ? undefined : setDevelopmentStyles()
@@ -207,7 +207,7 @@ function App() {
       <div id="appContainer" ref={appContainerRef}>
         <div style={{
           position: "relative",
-          transform: `${isMobile ? 'none' : 'translateY(8px)'}`
+          /* transform: `${isMobile ? 'none' : 'translateY(8px)'}` */
         }}>
           <div style={{
             display: 'flex',
