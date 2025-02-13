@@ -20,7 +20,7 @@ function App() {
   //const [types, setTypes] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [sortQuery, setSortQuery] = useState<string>('')
-  const [selectedStore, setSelectedStores] = useState<string[]>([])
+  const [selectedStore, setSelectedStores] = useState<string[]>(['fairfield'])
   const [userIP, setUserIP] = useState<string>('')
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   //const [selectedTypes, setSelectedTypes] = useState<string[]>([])
@@ -50,7 +50,7 @@ function App() {
         //console.log("Fetching data");
         const data = await fetchSeafoodData();
         setSeafoodItems(data);
-        setFilteredSeafoodItems(sortSeafood(data, 'category', selectedStore, userIP))
+        setFilteredSeafoodItems(filterStore(sortSeafood((data), 'category', selectedStore, userIP), selectedStore))
       } catch {
         //console.log("Error fetching data in useEffect");
       }
@@ -115,7 +115,7 @@ function App() {
     setCategories(uniqueCategories)
 
     if (appLoading && (seafoodItems.length > 0)) {
-      setAppLoading(false)    
+      setAppLoading(false)
     }
 
     /* AUTO GENERATED MATCHING SEAFOOD TYPES */
@@ -126,6 +126,7 @@ function App() {
   useEffect(() => {  // when the user searches for a keyword, filter it here
     const filteredList = orderedSeafood()
     setFilteredSeafoodItems(filteredList)
+    
   }, [searchQuery, selectedStore])
 
 
@@ -147,8 +148,6 @@ function App() {
 
   const orderedSeafood = (): SeafoodItem[] => {
     // wine type > country > search query > sort
-    console.log(sortQuery);
-    
     return sortSeafood(searchItems(filterCategory(filterStore(seafoodItems, selectedStore), selectedCategories), searchQuery), sortQuery, selectedStore, userIP)
   }
 
@@ -173,18 +172,11 @@ function App() {
     setFilteredSeafoodItems(filteredList)
   }
 
-  const handleFilterStore = (query: string) => {
-    const newArray = selectedStore;
-    if (newArray.includes(query)) {
-      newArray.splice(newArray.indexOf(query), 1)
-    } else {
-      newArray.push(query)
-    }
-
-    setSelectedStores(newArray)
+  const handleFilterStore = (query: string) => {    
+    let newArray = [query]
+    setSelectedStores([...newArray])
     const filteredList = orderedSeafood()
-    console.log(newArray, filteredList);
-    
+
     setFilteredSeafoodItems(filteredList)
   }
 
@@ -227,18 +219,16 @@ function App() {
 
             {/* Select Store */}
             <div id="chooseStoreContainer">
-              <button id="storeFairfield" className="chooseStore noAppearance"
-                onClick={() => { 
-                  handleFilterStore('fairfield') 
-                  document.getElementById('storeFairfield')?.classList.toggle('active')
-                  }}>
+              <button id="storeFairfield" className={`chooseStore noAppearance ${selectedStore.includes('fairfield') ? 'active' : ''}`}
+                onClick={() => {
+                  handleFilterStore('fairfield')
+                }}>
                 FAIRFIELD
               </button>
-              <button id="storeEastgate" className="chooseStore noAppearance"
-                onClick={() => { 
-                  handleFilterStore('eastgate') 
-                  document.getElementById('storeEastgate')?.classList.toggle('active')
-                  }}>
+              <button id="storeEastgate" className={`chooseStore noAppearance ${selectedStore.includes('eastgate') ? 'active' : ''}`}
+                onClick={() => {
+                  handleFilterStore('eastgate')
+                }}>
                 EASTGATE
               </button>
             </div>
@@ -269,7 +259,7 @@ function App() {
             </div>
 
             {/* Search Bar */}
-            <div className='inputWrapper' style={{flexGrow: `${isMobile ? 1 : 0}`}}>
+            <div className='inputWrapper' style={{ flexGrow: `${isMobile ? 1 : 0}` }}>
               <input type="text"
                 placeholder="Search..."
                 value={searchQuery ?? undefined}
@@ -280,15 +270,15 @@ function App() {
 
           {
             isMobile ?
-            <div className='filterToolbar'>
-              <WithPopUp viewportRes={viewportRes} title='Categories' scrollable={true}>
-                <FilterPanel filters={categories} activeFilters={selectedCategories} handleFilter={handleFilterCategory} />
-              </WithPopUp>
-              {/*  <WithPopUp viewportRes={viewportRes} title='Fish Types' scrollable={true}>
+              <div className='filterToolbar'>
+                <WithPopUp viewportRes={viewportRes} title='Categories' scrollable={true}>
+                  <FilterPanel filters={categories} activeFilters={selectedCategories} handleFilter={handleFilterCategory} />
+                </WithPopUp>
+                {/*  <WithPopUp viewportRes={viewportRes} title='Fish Types' scrollable={true}>
                   <FilterPanel filters={types} activeFilters={selectedTypes} handleFilter={handleFilterDescription} />
                 </WithPopUp> */}
 
-            </div> : undefined
+              </div> : undefined
           }
         </div>
 

@@ -8,7 +8,10 @@ export type SeafoodItem = {
 }
 
 export const getPrice = (item: SeafoodItem, userIP: string, selectedStores: string[]): string => {
-
+    if ( item.fairfield !== item.eastgate && item.fairfieldStatus == item.eastgateStatus) {
+        console.log('items dont match!', item);
+        
+    }
     if (selectedStores.includes('fairfield')) {
         return item.fairfield
     }
