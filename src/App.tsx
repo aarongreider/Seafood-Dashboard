@@ -103,9 +103,6 @@ function App() {
     };
   }, []);
 
-
-
-
   useEffect(() => { // assemble list of categories and set app loading status
     // map to get an array of categories 
     const categories = seafoodItems
@@ -126,7 +123,7 @@ function App() {
   useEffect(() => {  // when the user searches for a keyword, filter it here
     const filteredList = orderedSeafood()
     setFilteredSeafoodItems(filteredList)
-    
+
   }, [searchQuery, selectedStore])
 
 
@@ -172,7 +169,7 @@ function App() {
     setFilteredSeafoodItems(filteredList)
   }
 
-  const handleFilterStore = (query: string) => {    
+  const handleFilterStore = (query: string) => {
     let newArray = [query]
     setSelectedStores([...newArray])
     const filteredList = orderedSeafood()
@@ -284,7 +281,10 @@ function App() {
 
 
 
-        <p style={{ color: "#e9e5d4", fontWeight: 500, fontStyle: 'italic', width: '100%', textAlign: 'right', paddingRight: '6px', margin: 0 }}>
+        <p style={{
+          color: "#e9e5d4", fontWeight: 500, fontStyle: 'italic', width: '100%', textAlign: 'right', paddingRight: '6px', margin: 0,
+          marginBottom: `${!isMobile ? "30px" : 0}`
+        }}>
           {filteredSeafoodItems.length} Results
           {selectedCategories.length > 0 && ` >`}
           {selectedCategories.map((filter, index) => {
