@@ -74,6 +74,11 @@ select {
 
 .inputWrapper {
   padding: 5px 10px 5px 5px;
+  height: 34px;
+  cursor: text;
+}
+.inputWrapper input {
+  cursor: text;
 }
 
 select.noAppearance {
@@ -87,4 +92,31 @@ select.noAppearance {
   font-weight: 600;
   font-size: 20px;
   transform: translateY(1px);
+}
+
+#chooseStoreContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+#chooseStoreContainer .chooseStore {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  width: -moz-min-content;
+  width: min-content;
+  border: none;
+  border-radius: 30px;
+  outline: 2px solid #e9e5d4;
+  background: #2a4731;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 0 10px 1px;
+  color: #e9e5d4;
+  cursor: pointer;
+}
+#chooseStoreContainer .active {
+  outline: 1px solid #e9e5d4;
+  background: #e9e5d4;
+  color: #2a4731;
 }/*# sourceMappingURL=App.css.map */

@@ -3,11 +3,11 @@ import './SeafoodCard.css'
 
 interface cardProps {
     item: SeafoodItem
-    store: string
+    selectedStores: string[]
     IP: string
 }
 
-export function SeafoodCard({ item, store, IP }: cardProps) {
+export function SeafoodCard({ item, selectedStores, IP }: cardProps) {
     return <>
         <div className="seafoodItem">
             <div>
@@ -24,13 +24,13 @@ export function SeafoodCard({ item, store, IP }: cardProps) {
                     alignItems: 'flex-end',
                     flexWrap: 'wrap'
                 }}>
-                    
+
                     <p style={{
                         fontSize: '18px',
                         fontWeight: 800,
                         margin: '0px',
                     }}>{item.category}</p>
-                    
+
                     <p style={{
                         fontSize: '16px',
                         fontWeight: 800,
@@ -45,7 +45,7 @@ export function SeafoodCard({ item, store, IP }: cardProps) {
                 </div>
             </div>
             <div>
-                <h3 style={{ fontWeight: 900, textTransform: "lowercase" }}>{`${getPrice(item, store, IP) ?? ""}`}</h3>
+                <h3 style={{ fontWeight: 900, textTransform: "lowercase" }}>{`${getPrice(item, IP, selectedStores) ?? ""}`}</h3>
             </div>
         </div>
     </>

@@ -7,13 +7,13 @@ export type SeafoodItem = {
     eastgateStatus: string,
 }
 
-export const getPrice = (item: SeafoodItem, userIP: string, selectedStore: string): string => {
+export const getPrice = (item: SeafoodItem, userIP: string, selectedStores: string[]): string => {
 
-    if (selectedStore == 'fairfield') {
+    if (selectedStores.includes('fairfield')) {
         return item.fairfield
     }
 
-    if (selectedStore == 'eastgate') {
+    if (selectedStores.includes('eastgate')) {
         return item.eastgate
     }
 
@@ -21,7 +21,7 @@ export const getPrice = (item: SeafoodItem, userIP: string, selectedStore: strin
         return item.fairfield
     }
 
-    if (userIP == "74.219.230.226") {
+    if (userIP == "70.62.236.130") {
         return item.eastgate
     }
 
@@ -67,19 +67,21 @@ export const searchItems = (seafoodItems: SeafoodItem[], searchQuery: string): S
     }
 }
 
-export const filterStore = (seafoodItems: SeafoodItem[], store: string): SeafoodItem[] => {
-    // filter bottle list based on query match, runs more frequently
-    if (store) {
-        if (store == 'fairfield') {
-            return seafoodItems.filter((item) => {
-                return (item.fairfieldStatus == "In Stock");
-            })
-        }
-        if (store == 'eastgate') {
-            return seafoodItems.filter((item) => {
-                return (item.eastgateStatus == "In Stock");
-            })
-        }
+export const filterStore = (seafoodItems: SeafoodItem[], selectedStores: string[]): SeafoodItem[] => {
+    // filter seafood list based on query match, runs more frequently
+
+    if (selectedStores.length > 0) {
+        return seafoodItems.filter((item) => {
+            return selectedStores.some((store) => {
+                return (
+                    store == 'fairfield'
+                        ? item.fairfieldStatus == "In Stock"
+                        : store == 'eastgate'
+                            ? item.eastgateStatus == "In Stock"
+                            : false
+                );
+            });
+        });
     }
 
     return seafoodItems
@@ -120,24 +122,45 @@ export const filterTypes = (seafoodItems: SeafoodItem[], selectedTypes: string[]
 }
 
 
-export const sortBottles = (filteredSeafoodItems: SeafoodItem[], sortQuery: string, store: string, IP: string): SeafoodItem[] => {
-    // Sort the filtered array by Vintage year, with undated bottles at the bottom
+export const sortSeafood = (filteredSeafoodItems: SeafoodItem[], sortQuery: string, selectedStores: string[], IP: string): SeafoodItem[] => {
+
+    // Sort the filtered array
     const cleanPrice = (price: string): number => {
         // Remove non-numeric characters except periods (.) using a regex
         const cleanedPrice = `${price}`.replace(/[^0-9.]/g, '');
         return cleanedPrice === "" ? 0.0 : parseFloat(cleanedPrice); // Convert cleaned string to a float
     };
 
+    const getHardcodedCategory = (item: SeafoodItem): string => {
+        return item.category.includes("Out of Stock / Season")
+            ? 'zzzzzzzzzzz'
+            : item.category.includes("Weekly Sale Items")
+                ? 'aaaaaaaaaaa'
+                : item.category.includes("Whole Fish")
+                    ? 'aaaaaaaaaab'
+                    : item.category
+    }
+
     if (sortQuery === '') {
         return filteredSeafoodItems
     } else {
         let sortedSeafoodItems: SeafoodItem[] = filteredSeafoodItems
         switch (sortQuery) {
+            case "category":
+                {
+                    filteredSeafoodItems.sort((a, b) => {
+                        const aCat = getHardcodedCategory(a); // Convert price to number
+                        const bCat = getHardcodedCategory(b)
+
+                        return aCat?.localeCompare(bCat);
+                    })
+                    break;
+                }
             case "price ascending":
                 {
                     filteredSeafoodItems.sort((a, b) => {
-                        const aPrice = cleanPrice(getPrice(a, store, IP) ?? '99999999'); // Convert price to number
-                        const bPrice = cleanPrice(getPrice(b, store, IP) ?? '99999999');
+                        const aPrice = cleanPrice(getPrice(a, IP, selectedStores) ?? '99999999'); // Convert price to number
+                        const bPrice = cleanPrice(getPrice(b, IP, selectedStores) ?? '99999999');
 
                         return aPrice - bPrice; // Ascending order by Price
                     })
@@ -146,8 +169,8 @@ export const sortBottles = (filteredSeafoodItems: SeafoodItem[], sortQuery: stri
             case "price descending":
                 {
                     filteredSeafoodItems.sort((a, b) => {
-                        const aPrice = cleanPrice(getPrice(a, store, IP) ?? '0'); // Convert price to number
-                        const bPrice = cleanPrice(getPrice(b, store, IP) ?? '0');
+                        const aPrice = cleanPrice(getPrice(a, IP, selectedStores) ?? '0'); // Convert price to number
+                        const bPrice = cleanPrice(getPrice(b, IP, selectedStores) ?? '0');
 
                         return bPrice - aPrice; // Ascending order by Price
                     })
@@ -261,7 +284,6 @@ export const seafoodTypes = [
 ];
 
 
-import '../../Default CSS/907ce8a0_ai1ec_parsed_css.css'
 export const setDevelopmentStyles = () => {
     console.log('setting dev styles');
 
