@@ -33,7 +33,7 @@ function App() {
 
 
   useEffect(() => {  //execute the initial fetches
-    console.log("v .3");
+    console.log("v .4");
 
 
     import.meta.env.PROD ? undefined : setDevelopmentStyles()
@@ -212,7 +212,7 @@ function App() {
           <div style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '10px',
+            gap: '3px',
             position: `${isMobile ? 'relative' : 'absolute'}`,
             width: `${isMobile ? '90svw' : '60svw'}`,
           }}>
