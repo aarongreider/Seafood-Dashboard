@@ -268,7 +268,7 @@ function App() {
             </div>
 
             {/* Search Bar */}
-            <div className='inputWrapper'>
+            <div className='inputWrapper' style={{flexGrow: `${isMobile ? 1 : 0}`}}>
               <input type="text"
                 placeholder="Search..."
                 value={searchQuery ?? undefined}
