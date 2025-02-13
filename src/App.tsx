@@ -33,7 +33,7 @@ function App() {
 
 
   useEffect(() => {  //execute the initial fetches
-    console.log("v .2");
+    console.log("v .3");
 
 
     import.meta.env.PROD ? undefined : setDevelopmentStyles()
@@ -278,7 +278,7 @@ function App() {
           </div>
 
           {
-            /* isMobile ? */
+            isMobile ?
             <div className='filterToolbar'>
               <WithPopUp viewportRes={viewportRes} title='Categories' scrollable={true}>
                 <FilterPanel filters={categories} activeFilters={selectedCategories} handleFilter={handleFilterCategory} />
@@ -287,7 +287,7 @@ function App() {
                   <FilterPanel filters={types} activeFilters={selectedTypes} handleFilter={handleFilterDescription} />
                 </WithPopUp> */}
 
-            </div> /* : undefined */
+            </div> : undefined
           }
         </div>
 
