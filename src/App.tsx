@@ -33,7 +33,7 @@ function App() {
 
 
   useEffect(() => {  //execute the initial fetches
-    console.log("v .5");
+    console.log("v .6");
 
 
     import.meta.env.PROD ? undefined : setDevelopmentStyles()
@@ -215,6 +215,7 @@ function App() {
             gap: '3px',
             position: `${isMobile ? 'relative' : 'absolute'}`,
             width: `${isMobile ? '90svw' : '60svw'}`,
+            marginBottom: '8px'
           }}>
             <h1 style={{
               textAlign: 'left',
