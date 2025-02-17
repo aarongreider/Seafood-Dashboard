@@ -33,7 +33,7 @@ function App() {
 
 
   useEffect(() => {  //execute the initial fetches
-    console.log("v .6");
+    console.log("v .7");
 
 
     import.meta.env.PROD ? undefined : setDevelopmentStyles()
@@ -49,7 +49,14 @@ function App() {
       try {
         //console.log("Fetching data");
         const data = await fetchSeafoodData();
-        setSeafoodItems(data);
+        setSeafoodItems([...data, {
+          "category": "Whole Fish",
+          "description": "WALLEYE",
+          "fairfield": "Out of Stock",
+          "fairfieldStatus": "Out of Stock",
+          "eastgate": "$9.99",
+          "eastgateStatus": "In Stock"
+      }]);
         setFilteredSeafoodItems(filterStore(sortSeafood((data), 'category', selectedStore, userIP), selectedStore))
       } catch {
         //console.log("Error fetching data in useEffect");

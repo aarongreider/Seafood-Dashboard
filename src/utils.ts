@@ -8,10 +8,6 @@ export type SeafoodItem = {
 }
 
 export const getPrice = (item: SeafoodItem, userIP: string, selectedStores: string[]): string => {
-    if ( item.fairfield !== item.eastgate && item.fairfieldStatus == item.eastgateStatus) {
-        console.log('items dont match!', item);
-        
-    }
     if (selectedStores.includes('fairfield')) {
         return item.fairfield
     }
@@ -72,8 +68,8 @@ export const searchItems = (seafoodItems: SeafoodItem[], searchQuery: string): S
 
 export const filterStore = (seafoodItems: SeafoodItem[], selectedStores: string[]): SeafoodItem[] => {
     // filter seafood list based on query match, runs more frequently
-
-    if (selectedStores.length > 0) {
+    selectedStores;
+    /* if (selectedStores.length > 0) {
         return seafoodItems.filter((item) => {
             return selectedStores.some((store) => {
                 return (
@@ -85,7 +81,7 @@ export const filterStore = (seafoodItems: SeafoodItem[], selectedStores: string[
                 );
             });
         });
-    }
+    } */
 
     return seafoodItems
 }
@@ -98,7 +94,7 @@ export const filterCategory = (seafoodItems: SeafoodItem[], selectedCategories: 
         return seafoodItems.filter((item) => {
             return selectedCategories.some((query) => {
                 return (
-                    item.category?.replace(/[^a-zA-Z0-9\s]/g, '').toLowerCase().includes(query.toLowerCase())
+                    item.category.toLowerCase().includes(query.toLowerCase())
                 );
             });
         });

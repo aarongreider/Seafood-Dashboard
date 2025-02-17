@@ -11,8 +11,6 @@ export function SeafoodCard({ item, selectedStores, IP }: cardProps) {
     return <>
         <div className="seafoodItem">
             <div>
-
-
                 <h2 style={{ fontSize: '28px', margin: '0px', lineHeight: 1, textTransform: 'capitalize' }}>
                     {item.description.toLowerCase()}
                 </h2>
@@ -38,14 +36,21 @@ export function SeafoodCard({ item, selectedStores, IP }: cardProps) {
                     }}>{
                             item.eastgateStatus == "In Stock" && item.fairfieldStatus == "In Stock"
                                 ? undefined
-                                : item.eastgateStatus == "In Stock"
+                                : /* item.eastgateStatus == "Out of Stock" && item.fairfieldStatus == "Out of Stock"
+                                    ? 'OUT OF STOCK' : */
+                                item.eastgateStatus == "In Stock"
                                     ? 'EASTGATE ONLY'
-                                    : 'FAIRFIELD ONLY'
+                                    : item.fairfieldStatus == "In Stock"
+                                        ? 'FAIRFIELD ONLY'
+                                        : undefined
                         }</p>
                 </div>
             </div>
             <div>
-                <h3 style={{ fontWeight: 900, textTransform: "lowercase" }}>{`${getPrice(item, IP, selectedStores) ?? ""}`}</h3>
+                <h3 style={{
+                    fontWeight: 900, textTransform: "lowercase",
+                    fontSize: `${getPrice(item, IP, selectedStores) == "Out of Stock" ? '22px' : ''}`
+                }}>{`${getPrice(item, IP, selectedStores) ?? ""}`}</h3>
             </div>
         </div>
     </>
