@@ -229,6 +229,7 @@ function App() {
                 EASTGATE
               </button>
             </div>
+            {/* <p style={{textAlign: "left", padding: "2px 5px", color: "#e9e5d4"}}>All items are subject to availability</p> */}
 
 
 
@@ -241,7 +242,7 @@ function App() {
             {/* Sort Button */}
             <div style={{ position: 'relative' }}>
               <select id="sortWidget" className="noAppearance" ref={sortRef} onChange={onSort}
-                style={{ textAlign: "left", zIndex: 1, width: '63px', }}>
+                style={{ textAlign: "left", zIndex: 1, width: '77px', }}>
                 <option value={'category'}>Sort</option>
                 <option value={'category'}>Category</option>
                 <option value={'price descending'}>Most $</option>
@@ -290,8 +291,10 @@ function App() {
           {selectedCategories.map((filter, index) => {
             return <span key={index}>{` ${filter}${index == selectedCategories.length - 1 ? `` : `,`}`}</span>
           })}
-
+          <br />
+          All items are subject to availability
         </p>
+
 
         {
           appLoading ? <LoadingWidget /> :
