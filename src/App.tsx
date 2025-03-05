@@ -292,7 +292,8 @@ function App() {
             return <span key={index}>{` ${filter}${index == selectedCategories.length - 1 ? `` : `,`}`}</span>
           })}
           <br />
-          All items are subject to availability
+          All items are subject to availability. 
+          <br />Items are priced per pound or as specified. 
         </p>
 
 
